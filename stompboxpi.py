@@ -25,7 +25,8 @@ Description: This file includes helpful functions for creating other application
 for your stompbox-encased Raspberry Pi (in addition to the Squishbox)
 """
 import RPi.GPIO as GPIO
-import Adafruit_CharLCD
+from adafruit_character_lcd.character_lcd_i2c import Character_LCD_I2C
+import board
 import time
 # model/hardware dependent values for buttons, wiring, etc.
 from stompboxpi_hw_overlay import *
@@ -276,13 +277,8 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BTN_L, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(BTN_R, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-LCD = Adafruit_CharLCD.Adafruit_CharLCD(LCD_RS,
-                                        LCD_EN,
-                                        LCD_D4,
-                                        LCD_D5,
-                                        LCD_D6,
-                                        LCD_D7,
-                                        16, 2)
+i2c = board.I2C()
+LCD = Character_LCD_I2C(i2c, 16, 2)
 
 CHR_BSP=0
 CHR_NEW=1
